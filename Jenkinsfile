@@ -3,7 +3,7 @@ pipeline {
     docker {
       reuseNode 'true'
       registryUrl 'https://coding-public-docker.pkg.coding.net'
-      image 'public/docker/nodejs:21-2024.01'
+      image 'public/docker/nodejs:20-2024.01'
       args '-v /root/.npm:/root/.npm'
     }
 
@@ -28,19 +28,12 @@ pipeline {
           }
         }
       }
-      stage('阶段 4-1') {
-        steps {
-          script {
-            echo env.BAIDU_TOKEN
-          }
-        }
-      }
       stage('Push Search Engines') {
         steps {
           script {
-            sh "npx hexo-seo-submit baidu -t env.BAIDU_TOKEN -s https://ksh7.com -f hexo-seo-submit/baidu.txt"
-            sh "npx hexo-seo-submit bing -k env.BING_APIKEY -f hexo-seo-submit/bing.json"
-            sh "npx hexo-seo-submit google -f hexo-seo-submit/google-url.txt -mail env.GOOGLE_CLIENT_EMAIL -key 'env.GOOGLE_PRIVATE_KEY'"
+            sh "npx hexo-seo-submit baidu -t $env.BAIDU_TOKEN -s https://ksh7.com -f hexo-seo-submit/baidu.txt"
+            sh "npx hexo-seo-submit bing -k $env.BING_APIKEY -f hexo-seo-submit/bing.json"
+            sh "npx hexo-seo-submit google -f hexo-seo-submit/google-url.txt -mail $env.GOOGLE_CLIENT_EMAIL -key $env.GOOGLE_PRIVATE_KEY"
           }
         }
       }
