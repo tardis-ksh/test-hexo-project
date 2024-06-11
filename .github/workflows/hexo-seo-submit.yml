@@ -1,0 +1,30 @@
+name: Hexo SEO Auto Push
+on:
+  schedule:
+    - cron: 0 4 * * *
+  watch:
+    types: [started]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          node-version: latest
+      - run: |
+          npm init -y
+          npm install hexo-seo-submit
+
+      - name: push search engine baidu
+        run: |
+          npx hexo-seo-submit baidu -t ${{ secrets.baidu_token }} -s  -f hexo-seo-submit/baidu.txt
+
+      - name: push search engine bing
+        run: |
+          npx hexo-seo-submit bing -k ${{ secrets.bing_apikey }} -f hexo-seo-submit/bing.json
+
+      - name: push search engine google
+        run: |
+          npx hexo-seo-submit google -f hexo-seo-submit/google-url.txt -mail ${{ secrets.client_email }} -key "${{ secrets.private_key }}"
