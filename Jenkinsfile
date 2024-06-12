@@ -33,9 +33,9 @@ pipeline {
       stage('Push Search Engines') {
         steps {
           script {
-//             sh "npx hexo-seo-submit baidu -t $env.BAIDU_TOKEN -s https://ksh7.com -f hexo-seo-submit/baidu.txt"
-//             sh "npx hexo-seo-submit bing -k $env.BING_APIKEY -f hexo-seo-submit/bing.json"
-            sh "npx hexo-seo-submit google -f hexo-seo-submit/google-url.txt -mail $env.GOOGLE_CLIENT_EMAIL -key '$env.GOOGLE_PRIVATE_KEY'"
+            sh "npx hexo-seo-submit baidu -t $env.BAIDU_TOKEN -s https://ksh7.com -f hexo-seo-submit/baidu.txt"
+            sh "npx hexo-seo-submit bing -k $env.BING_APIKEY -f hexo-seo-submit/bing.json"
+            sh "npx hexo-seo-submit google -f hexo-seo-submit/google-url.txt -mail $env.GOOGLE_CLIENT_EMAIL -key $env.GOOGLE_PRIVATE_KEY"
           }
         }
       }
